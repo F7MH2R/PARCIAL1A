@@ -95,7 +95,7 @@ namespace PARCIAL1A.Controllers
         }
         //Eliminar un registro
         [HttpDelete]
-        [Route("Delete/{id}")]
+        [Route("Deleteautor/{id}")]
         public IActionResult delete_product(int id)
         {
             //Obtener el registro que se desea eliminar
