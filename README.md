@@ -1,3 +1,3 @@
 Alumnos:
-Fernando Heriberto Musto Ramirez
-Carlos Leonel Castaneda Hernandez
+\n Fernando Heriberto Musto Ramirez
+\n Carlos Leonel Castaneda Hernandez
