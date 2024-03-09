@@ -24,9 +24,9 @@ namespace PARCIAL1A.Controllers
 
         ///Mostrar todo GET
         [HttpGet]
-        [Route("OBTENER_AUTORES_TODO")]
+        [Route("OBTENER_AUTORES_TODO_AUTORL")]
 
-        public IActionResult Get()
+        public IActionResult GetAutoL()
         {
             List<AutorLibro> listadoAutores = (from e in _autoresLContex.AutorLibros
                                             select e).ToList();
@@ -147,6 +147,8 @@ namespace PARCIAL1A.Controllers
                 return Ok("Busqueda realizada con exito\n " + "AutorId" + autorselect.AutorId+ " \nLibroId" + autorselect.LibroId);
 
             }
+
+
         }
     }
 }

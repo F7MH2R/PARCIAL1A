@@ -24,9 +24,9 @@ namespace PARCIAL1A.Controllers
 
         ///Mostrar todo GET
         [HttpGet]
-        [Route("OBTENER_AUTORES_TODO")]
+        [Route("OBTENER_AUTORES_TODOLibros")]
 
-        public IActionResult Get()
+        public IActionResult GetL()
         {
             List<Libros> listadoLibro = (from e in _aLibroLContex.Libros
                                                select e).ToList();
@@ -44,11 +44,11 @@ namespace PARCIAL1A.Controllers
         //Peticion para agregar un equipo
         [HttpPost]
         [Route("AGREGARAUTOR")]
-        public IActionResult save_equipo([FromBody] AutorLibro autorl)
+        public IActionResult save_equipo([FromBody] Libros autorl)
         {
             try
             {
-                _aLibroLContex.AutorLibros.Add(autorl);
+                _aLibroLContex.Libros.Add(autorl);
                 _aLibroLContex.SaveChanges();
                 return Ok(autorl);
 
@@ -65,13 +65,13 @@ namespace PARCIAL1A.Controllers
         //Peticion para actualizar un registro
         [HttpPut]
         [Route("Actualizarautores/{id}")]
-        public IActionResult update_reg(int id, [FromBody] AutorLibro AUTORUPDATE)
+        public IActionResult update_reg(int id, [FromBody] Libros AUTORUPDATE)
         {
 
             //Buscar el registro que se desea modificar
             //Contener en el objeto equiposelection
-            AutorLibro? autorselect = (from e in _aLibroLContex.AutorLibros
-                                       where e.AutorId == id
+            Libros? autorselect = (from e in _aLibroLContex.Libros
+                                   where e.Id == id
                                        select e).FirstOrDefault();
 
             //Verificar que si existe el registro con el id correspondiente
@@ -84,8 +84,8 @@ namespace PARCIAL1A.Controllers
             }
             else
             {
-                autorselect.LibroId = AUTORUPDATE.LibroId;
-                autorselect.Orden = AUTORUPDATE.Orden;
+                autorselect.Titulo = AUTORUPDATE.Titulo;
+             
 
                 //Marcamos el registro modificado
                 //Enviar modificaciones a la base de datos
@@ -103,8 +103,8 @@ namespace PARCIAL1A.Controllers
         public IActionResult delete_product(int id)
         {
             //Obtener el registro que se desea eliminar
-            AutorLibro? autorselect = (from e in _aLibroLContex.AutorLibros
-                                       where e.AutorId == id
+            Libros? autorselect = (from e in _aLibroLContex.Libros
+                                   where e.Id == id
                                        select e).FirstOrDefault();
 
             //Verificamos si existe
@@ -115,10 +115,10 @@ namespace PARCIAL1A.Controllers
             else
             {
                 //si existe ejecutamos la accion de eliminar
-                _aLibroLContex.AutorLibros.Attach(autorselect);
-                _aLibroLContex.AutorLibros.Remove(autorselect);
+                _aLibroLContex.Libros.Attach(autorselect);
+                _aLibroLContex.Libros.Remove(autorselect);
                 _aLibroLContex.SaveChanges();
-                return Ok("Se a eliminado el registro \n" + autorselect + "AutorId: " + autorselect.AutorId);
+                return Ok("Se a eliminado el registro \n" + autorselect + "Titulo: " + autorselect.Titulo);
 
 
             }
@@ -132,8 +132,8 @@ namespace PARCIAL1A.Controllers
         {
 
             //Buscar el registro con la consulta
-            AutorLibro? autorselect = (from e in _aLibroLContex.AutorLibros
-                                       where e.AutorId == id
+            Libros? autorselect = (from e in _aLibroLContex.Libros
+                                       where e.Id == id
                                        select e).FirstOrDefault();
 
 
@@ -144,7 +144,7 @@ namespace PARCIAL1A.Controllers
             }
             else
             {
-                return Ok("Busqueda realizada con exito\n " + "AutorId" + autorselect.AutorId + " \nLibroId" + autorselect.LibroId);
+                return Ok("Busqueda realizada con exito\n " + "ID" + autorselect.Id + " \nLibro Titulo:" + autorselect.Titulo);
 
             }
         }
