@@ -17,7 +17,6 @@ namespace PARCIAL1A.Controllers
             _autoresContex = autoresCont;
 
         }
-
         //Peticiones
 
         //Peticiones
@@ -56,8 +55,6 @@ namespace PARCIAL1A.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-
-
             }
 
         }
@@ -233,5 +230,10 @@ namespace PARCIAL1A.Controllers
             return Ok(resultados);
         }
 
+       
+       
     }
+
+
+
 }

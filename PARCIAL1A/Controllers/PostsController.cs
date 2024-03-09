@@ -65,7 +65,7 @@ namespace PARCIAL1A.Controllers
         //Peticion para actualizar un registro
         [HttpPut]
         [Route("ActualizarPost/{id}")]
-        public IActionResult update_reg(int id, [FromBody] AutorLibro AUTORUPDATE)
+        public IActionResult update_reg(int id, [FromBody] Post AUTORUPDATE)
         {
 
             //Buscar el registro que se desea modificar
@@ -84,7 +84,7 @@ namespace PARCIAL1A.Controllers
             }
             else
             {
-                autorselect.id = AUTORUPDATE.LibroId;
+                autorselect.id = AUTORUPDATE.id;
 
                 //Marcamos el registro modificado
                 //Enviar modificaciones a la base de datos
@@ -102,8 +102,8 @@ namespace PARCIAL1A.Controllers
         public IActionResult delete_product(int id)
         {
             //Obtener el registro que se desea eliminar
-            AutorLibro? autorselect = (from e in _aPostsContex.AutorLibros
-                                       where e.AutorId == id
+            Post? autorselect = (from e in _aPostsContex.Posts
+                                 where e.id == id
                                        select e).FirstOrDefault();
 
             //Verificamos si existe
@@ -114,8 +114,8 @@ namespace PARCIAL1A.Controllers
             else
             {
                 //si existe ejecutamos la accion de eliminar
-                _aPostsContex.AutorLibros.Attach(autorselect);
-                _aPostsContex.AutorLibros.Remove(autorselect);
+                _aPostsContex.Posts.Attach(autorselect);
+                _aPostsContex.Posts.Remove(autorselect);
                 _aPostsContex.SaveChanges();
                 return Ok("Se a eliminado el registro \n" + autorselect + "AutorId: " + autorselect.AutorId);
 
@@ -131,8 +131,8 @@ namespace PARCIAL1A.Controllers
         {
 
             //Buscar el registro con la consulta
-            AutorLibro? autorselect = (from e in _aPostsContex.AutorLibros
-                                       where e.AutorId == id
+            Post? autorselect = (from e in _aPostsContex.Posts
+                                       where e.id == id
                                        select e).FirstOrDefault();
 
 
@@ -143,7 +143,7 @@ namespace PARCIAL1A.Controllers
             }
             else
             {
-                return Ok("Busqueda realizada con exito\n " + "AutorId" + autorselect.AutorId + " \nLibroId" + autorselect.LibroId);
+                return Ok("Busqueda realizada con exito\n " + "AutorId" + autorselect.id + " \nFechaPublicacion" + autorselect.FechaPublicacion);
 
             }
         }

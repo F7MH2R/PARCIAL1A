@@ -28,13 +28,13 @@ namespace PARCIAL1A.Controllers
 
         public IActionResult GetAutoL()
         {
-            List<AutorLibro> listadoAutores = (from e in _autoresLContex.AutorLibros
+            List<AutorLibro> LISTAl = (from e in _autoresLContex.AutorLibro
                                             select e).ToList();
-            if (listadoAutores.Count == 0)
+            if (LISTAl.Count == 0)
             {
                 return NotFound();
             }
-            return Ok(listadoAutores);
+            return Ok(LISTAl);
 
         }
 
@@ -48,7 +48,7 @@ namespace PARCIAL1A.Controllers
         {
             try
             {
-                _autoresLContex.AutorLibros.Add(autorl);
+                _autoresLContex.AutorLibro.Add(autorl);
                 _autoresLContex.SaveChanges();
                 return Ok(autorl);
 
@@ -70,7 +70,7 @@ namespace PARCIAL1A.Controllers
 
             //Buscar el registro que se desea modificar
             //Contener en el objeto equiposelection
-            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibros
+            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibro
                                        where e.AutorId == id
                                     select e).FirstOrDefault();
 
@@ -103,8 +103,8 @@ namespace PARCIAL1A.Controllers
         public IActionResult delete_product(int id)
         {
             //Obtener el registro que se desea eliminar
-            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibros
-                                    where e.AutorId == id
+            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibro
+                                       where e.AutorId == id
                                     select e).FirstOrDefault();
 
             //Verificamos si existe
@@ -115,8 +115,8 @@ namespace PARCIAL1A.Controllers
             else
             {
                 //si existe ejecutamos la accion de eliminar
-                _autoresLContex.AutorLibros.Attach(autorselect);
-                _autoresLContex.AutorLibros.Remove(autorselect);
+                _autoresLContex.AutorLibro.Attach(autorselect);
+                _autoresLContex.AutorLibro.Remove(autorselect);
                 _autoresLContex.SaveChanges();
                 return Ok("Se a eliminado el registro \n" + autorselect + "AutorId: " + autorselect.AutorId);
 
@@ -132,8 +132,8 @@ namespace PARCIAL1A.Controllers
         {
 
             //Buscar el registro con la consulta
-            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibros
-                                    where e.AutorId == id
+            AutorLibro? autorselect = (from e in _autoresLContex.AutorLibro
+                                       where e.AutorId == id
                                     select e).FirstOrDefault();
 
 
