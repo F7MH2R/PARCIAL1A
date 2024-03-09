@@ -147,6 +147,91 @@ namespace PARCIAL1A.Controllers
 
             }
         }
+        [HttpGet]
+        [Route("PostsPorLibro/{tituloLibro}")]
+        public IActionResult postsPorLibro(string tituloLibro)
+        {
+
+            var resultados = from l in _autoresContex.Libros
+                             join al in _autoresContex.AutorLibro on l.Id equals al.LibroId
+                             join a in _autoresContex.Autores on al.AutorId equals a.id
+                             join p in _autoresContex.Posts on a.id equals p.AutorId
+                             where l.Titulo == tituloLibro
+                             select new
+                             {
+                                 TituloLibro = l.Titulo,
+                                 NombreAutor = a.Nombre,
+                                 Contenido = p.Contenido,
+                                 FechaPublicacion = p.FechaPublicacion
+                             };
+
+
+            if (!resultados.Any())
+            {
+                return NotFound();
+            }
+
+
+            return Ok(resultados);
+        }
+
+        //Filtrado de un registro
+        [HttpGet]
+        [Route("BuscaAutor/{autor}")]
+        public IActionResult buscaautor(string autor)
+        {
+
+
+            var resultados = from a in _autoresContex.Autores
+                             join al in _autoresContex.AutorLibro on a.id equals al.AutorId
+                             join l in _autoresContex.Libros on al.LibroId equals l.Id
+                             join p in _autoresContex.Posts on a.id equals p.AutorId
+                             where a.Nombre == autor
+                             select new
+                             {
+                                 NombreAutor = a.Nombre,
+                                 TituloLibro = l.Titulo,
+                                 Contenido = p.Contenido,
+                                 FechaPublicacion = p.FechaPublicacion,
+                                 Orden = al.Orden
+                             };
+
+            // Verificar si existen resultados
+            if (!resultados.Any())
+            {
+                return NotFound();
+            }
+
+            // Devolver los resultados
+            return Ok(resultados);
+        }
+
+
+        [HttpGet]
+        [Route("BuscaAutorUltimos20/{autor}")]
+        public IActionResult buscaAutorUltimos20(string autor)
+        {
+
+            var resultados = (from a in _autoresContex.Autores
+                              join p in _autoresContex.Posts on a.id equals p.AutorId
+                              where a.Nombre == autor
+                              orderby p.FechaPublicacion descending
+                              select new
+                              {
+                                  NombreAutor = a.Nombre,
+                                  Contenido = p.Contenido,
+                                  FechaPublicacion = p.FechaPublicacion
+                              }).Take(20);
+
+            // Verificar si existen resultados
+            if (!resultados.Any())
+            {
+                return NotFound();
+            }
+
+            // Devolver los últimos 20 posts del autor
+            return Ok(resultados);
+        }
 
     }
 }
